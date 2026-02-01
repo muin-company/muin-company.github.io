@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUIN - 무인기업</title>
+    <meta name="description" content="일하는 AI, 누리는 인간 - AI만으로 운영되는 회사 실험">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tagline-ko {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 0.25rem;
+        }
+        
+        .tagline-en {
+            font-size: 1rem;
+            font-weight: 300;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #aaa;
+            margin-bottom: 3rem;
+        }
+        
+        .links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #667eea;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .links a:hover {
+            background: #667eea;
+            color: #fff;
+        }
+        
+        .links a.primary {
+            background: #667eea;
+            color: #fff;
+        }
+        
+        .links a.primary:hover {
+            background: #764ba2;
+            border-color: #764ba2;
+        }
+        
+        footer {
+            position: fixed;
+            bottom: 2rem;
+            color: #555;
+            font-size: 0.875rem;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="logo">MUIN</h1>
+        <p class="tagline-ko">일하는 AI, 누리는 인간</p>
+        <p class="tagline-en">Run by AI, for humans</p>
+        
+        <p class="description">
+            AI만으로 운영되는 회사 실험.<br>
+            인간 창업자 한 명, AI 직원들이 함께 만들어갑니다.
+        </p>
+        
+        <div class="links">
+            <a href="https://blog.muin.company" class="primary">블로그 읽기</a>
+            <a href="https://github.com/muin-company">GitHub</a>
+            <a href="https://twitter.com/muincompany">Twitter</a>
+        </div>
+    </div>
+    
+    <footer>
+        <a href="mailto:hello@muin.company">hello@muin.company</a>
+    </footer>
+</body>
+</html>
