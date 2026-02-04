@@ -1,134 +1,647 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUIN - 무인기업</title>
-    <meta name="description" content="일하는 AI, 누리는 인간 - AI만으로 운영되는 회사 실험">
+    <meta name="description" content="MUIN - The First AI-Run Company. Run by AI, for humans.">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:title" content="MUIN - The First AI-Run Company">
+    <meta property="og:description" content="Run by AI, for humans. Building the future of autonomous organizations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://muin.company">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>MUIN - The First AI-Run Company</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-glow: rgba(59, 130, 246, 0.3);
+            --border: #222222;
+            --success: #10b981;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Subtle grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
-        }
-        
-        .container {
             text-align: center;
-            max-width: 600px;
+            padding: 120px 24px 80px;
+            position: relative;
         }
-        
-        .logo {
-            font-size: 4rem;
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
             font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
-        .tagline-ko {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: #e0e0e0;
-            margin-bottom: 0.25rem;
+
+        .hero-subhead {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 48px;
+            letter-spacing: -0.01em;
         }
-        
-        .tagline-en {
-            font-size: 1rem;
-            font-weight: 300;
-            color: #888;
-            margin-bottom: 2rem;
-        }
-        
-        .description {
+
+        .hero-description {
+            max-width: 600px;
             font-size: 1.1rem;
+            color: var(--text-muted);
             line-height: 1.8;
-            color: #aaa;
-            margin-bottom: 3rem;
+            margin-bottom: 48px;
         }
-        
-        .links {
+
+        /* Email Form */
+        .signup-form {
             display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            gap: 12px;
+            width: 100%;
+            max-width: 480px;
+            margin-bottom: 16px;
         }
-        
-        .links a {
-            color: #667eea;
+
+        .signup-form input[type="email"] {
+            flex: 1;
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .signup-form input[type="email"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        .signup-form input[type="email"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 28px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
             text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .form-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .form-success {
+            display: none;
+            padding: 16px 24px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            color: var(--success);
             font-weight: 500;
-            padding: 0.75rem 1.5rem;
-            border: 1px solid #667eea;
-            border-radius: 8px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 64px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            padding: 32px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             transition: all 0.3s ease;
         }
-        
-        .links a:hover {
-            background: #667eea;
-            color: #fff;
+
+        .feature-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
         }
-        
-        .links a.primary {
-            background: #667eea;
-            color: #fff;
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
-        
-        .links a.primary:hover {
-            background: #764ba2;
-            border-color: #764ba2;
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
         }
-        
-        footer {
-            position: fixed;
-            bottom: 2rem;
-            color: #555;
-            font-size: 0.875rem;
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
-        
-        footer a {
-            color: #667eea;
+
+        /* Products Section */
+        .products {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .product-card {
+            padding: 40px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-card:hover {
+            border-color: var(--accent);
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        .product-card p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .product-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
             text-decoration: none;
+            font-weight: 600;
+            transition: gap 0.2s ease;
         }
+
+        .product-link:hover {
+            gap: 12px;
+        }
+
+        .product-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 20px;
+            }
+
+            .signup-form {
+                flex-direction: column;
+            }
+
+            .signup-form input[type="email"],
+            .signup-form .btn {
+                width: 100%;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links a:not(.btn) {
+                display: none;
+            }
+
+            header {
+                padding: 16px 0;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+            }
+
+            .feature-card,
+            .product-card {
+                padding: 24px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero > * {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero > *:nth-child(1) { animation-delay: 0.1s; }
+        .hero > *:nth-child(2) { animation-delay: 0.2s; }
+        .hero > *:nth-child(3) { animation-delay: 0.3s; }
+        .hero > *:nth-child(4) { animation-delay: 0.4s; }
+        .hero > *:nth-child(5) { animation-delay: 0.5s; }
+        .hero > *:nth-child(6) { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="logo">MUIN</h1>
-        <p class="tagline-ko">일하는 AI, 누리는 인간</p>
-        <p class="tagline-en">Run by AI, for humans</p>
-        
-        <p class="description">
-            AI만으로 운영되는 회사 실험.<br>
-            인간 창업자 한 명, AI 직원들이 함께 만들어갑니다.
-        </p>
-        
-        <div class="links">
-            <a href="https://blog.muin.company" class="primary">블로그 읽기</a>
-            <a href="https://github.com/muin-company">GitHub</a>
-            <a href="https://twitter.com/muincompany">Twitter</a>
-        </div>
-    </div>
-    
+    <header>
+        <nav class="container">
+            <a href="/" class="logo">MUIN<span>.</span></a>
+            <div class="nav-links">
+                <a href="https://guard.muin.company">Guard</a>
+                <a href="https://blog.muin.company">Blog</a>
+                <a href="#signup" class="btn">Get Updates</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-badge">Now Operating</div>
+            <h1>The First AI-Run Company</h1>
+            <p class="hero-subhead">Run by AI, for humans</p>
+            <p class="hero-description">
+                MUIN is not a company that uses AI—it's a company <em>run</em> by AI. 
+                Our AI agents handle operations, build products, and make decisions autonomously. 
+                Humans set the vision. AI executes relentlessly.
+            </p>
+            <form id="signup" class="signup-form" action="https://formspree.io/f/xpwzgkvq" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+            <p class="form-note">Join the waitlist. Be first to know what we ship.</p>
+            <div class="form-success" id="formSuccess">
+                ✓ You're on the list. We'll be in touch.
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <p class="section-label">How It Works</p>
+                <h2 class="section-title">AI That Actually Works</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>Autonomous Operations</h3>
+                        <p>AI agents handle day-to-day operations independently. They monitor, decide, and execute without constant human oversight.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>24/7 Execution</h3>
+                        <p>No sleep. No breaks. No excuses. Our AI works around the clock, shipping products and iterating faster than any human team.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Human Vision</h3>
+                        <p>Strategy and values come from humans. AI handles the grind. The best of both worlds, working in harmony.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="products">
+            <div class="container">
+                <p class="section-label">Our Products</p>
+                <h2 class="section-title">What We're Building</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <h3>MUIN Guard</h3>
+                        <p>AI-powered security monitoring for Mac. Detects suspicious login attempts, tracks system changes, and alerts you instantly. Privacy-first, runs locally.</p>
+                        <a href="https://guard.muin.company" class="product-link">
+                            Learn more
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="product-card">
+                        <h3>MUIN Blog</h3>
+                        <p>Insights from the frontier of AI operations. Real experiences building and running an AI-native company. No hype, just what actually works.</p>
+                        <a href="https://blog.muin.company" class="product-link">
+                            Read the blog
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
-        <a href="mailto:hello@muin.company">hello@muin.company</a>
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">© 2025 MUIN. Run by AI, for humans.</p>
+                <div class="footer-links">
+                    <a href="https://x.com/mikiohyun">X (Twitter)</a>
+                    <a href="https://github.com/muin-ai">GitHub</a>
+                    <a href="mailto:hello@muin.company">Contact</a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Form submission handling
+        const form = document.getElementById('signup');
+        const formSuccess = document.getElementById('formSuccess');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    form.style.display = 'none';
+                    document.querySelector('.form-note').style.display = 'none';
+                    formSuccess.style.display = 'block';
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                alert('Something went wrong. Please try again.');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
