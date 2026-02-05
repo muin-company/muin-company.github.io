@@ -71,6 +71,42 @@ const pages = [
     title: 'Bundle Size',
     subtitle: 'Check Bundle Size Impact',
     description: 'See how packages affect your bundle'
+  },
+  {
+    filename: 'tools/envdiff/og-image.png',
+    title: 'envdiff',
+    subtitle: 'Compare .env Files',
+    description: 'Find missing variables before they break your deploy'
+  },
+  {
+    filename: 'tools/tsconfig-helper/og-image.png',
+    title: 'tsconfig-helper',
+    subtitle: 'Understand TypeScript Configs',
+    description: 'Plain English explanations for 40+ compiler options'
+  },
+  {
+    filename: 'tools/gitig/og-image.png',
+    title: 'gitig',
+    subtitle: 'Generate .gitignore Files',
+    description: 'Built-in templates for 10+ platforms, works offline'
+  },
+  {
+    filename: 'tools/licensecheck/og-image.png',
+    title: 'licensecheck',
+    subtitle: 'Scan Dependency Licenses',
+    description: 'Catch copyleft and missing licenses before they catch you'
+  },
+  {
+    filename: 'tools/pkgsize/og-image.png',
+    title: 'pkgsize',
+    subtitle: 'Check npm Package Sizes',
+    description: 'Compare alternatives, stay lean'
+  },
+  {
+    filename: 'tools/commitlint-lite/og-image.png',
+    title: 'commitlint-lite',
+    subtitle: 'Lightweight Commit Linter',
+    description: 'Conventional Commits validation with zero dependencies'
   }
 ];
 
