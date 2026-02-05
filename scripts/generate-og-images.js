@@ -47,6 +47,30 @@ const pages = [
     title: 'Paste Checker',
     subtitle: 'Detect Sensitive Data',
     description: 'Check before you paste - 100% client-side'
+  },
+  {
+    filename: 'tools/readme-gen/og-image.png',
+    title: 'README Generator',
+    subtitle: 'Generate README from Package',
+    description: 'Auto-generate README.md from package.json'
+  },
+  {
+    filename: 'tools/depcheck-lite/og-image.png',
+    title: 'Depcheck Lite',
+    subtitle: 'Find Unused Dependencies',
+    description: 'Lightweight dependency checker'
+  },
+  {
+    filename: 'tools/lockcheck/og-image.png',
+    title: 'Lockfile Checker',
+    subtitle: 'Validate Package Lock Files',
+    description: 'Detect lockfile drift and issues'
+  },
+  {
+    filename: 'tools/bundlesize/og-image.png',
+    title: 'Bundle Size',
+    subtitle: 'Check Bundle Size Impact',
+    description: 'See how packages affect your bundle'
   }
 ];
 
