@@ -172,6 +172,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            align-items: center;
         }
 
         .filter-btn {
@@ -197,6 +198,39 @@
             color: #ffffff;
         }
 
+        .sort-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .sort-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .sort-select {
+            padding: 8px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: inherit;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .sort-select:hover {
+            border-color: var(--text-muted);
+        }
+
+        .sort-select:focus {
+            border-color: var(--accent);
+        }
+
         .no-results {
             padding: 60px 20px;
             text-align: center;
@@ -204,8 +238,33 @@
             font-size: 1.1rem;
         }
 
+        .tool-card {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 0.3s ease, opacity 0.2s ease, transform 0.2s ease;
+        }
+
         .tool-card.hidden {
-            display: none;
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card.fade-in {
+            animation: fadeIn 0.4s ease forwards;
         }
 
         /* Tools Grid */
@@ -350,6 +409,20 @@
                 max-width: 100%;
             }
 
+            .filter-wrapper {
+                width: 100%;
+            }
+
+            .sort-wrapper {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            .sort-select {
+                flex: 1;
+            }
+
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -403,13 +476,21 @@
                     <button class="filter-btn" data-filter="web">Web</button>
                     <button class="filter-btn" data-filter="extension">Extension</button>
                     <button class="filter-btn" data-filter="security">Security</button>
+                    <div class="sort-wrapper">
+                        <span class="sort-label">Sort:</span>
+                        <select id="sort-select" class="sort-select">
+                            <option value="alphabetical">Alphabetical</option>
+                            <option value="recent">Most Recent</option>
+                            <option value="popular">Most Popular</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div id="no-results" class="no-results" style="display: none;">
                 No tools found. Try a different search term.
             </div>
             <div class="tools-grid">
-                <a href="https://github.com/muin-company/bundlesize" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/bundlesize" class="tool-card" data-category="cli" data-stars="50" data-date="2024-11" target="_blank" rel="noopener">
                     <span class="tool-icon">📦</span>
                     <h2>bundlesize</h2>
                     <p>Track and enforce bundle size limits. Keep your builds lean with gzip-aware monitoring.</p>
@@ -423,7 +504,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/commitlint-lite" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/commitlint-lite" class="tool-card" data-category="cli" data-stars="35" data-date="2024-10" target="_blank" rel="noopener">
                     <span class="tool-icon">✅</span>
                     <h2>commitlint-lite</h2>
                     <p>Lightweight commit message linter. Conventional Commits validation with zero dependencies.</p>
@@ -437,7 +518,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/copy-as-markdown" class="tool-card" data-category="extension" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/copy-as-markdown" class="tool-card" data-category="extension" data-stars="120" data-date="2024-09" target="_blank" rel="noopener">
                     <span class="tool-icon">📋</span>
                     <h2>Copy as Markdown</h2>
                     <p>Chrome extension to copy web content as clean Markdown. Grab articles, docs, and pages in markdown format with one click.</p>
@@ -450,7 +531,7 @@
                     </svg>
                 </a>
 
-                <a href="/tools/cron-explain/" class="tool-card" data-category="web">
+                <a href="/tools/cron-explain/" class="tool-card" data-category="web" data-stars="85" data-date="2024-08">
                     <span class="tool-icon">⏰</span>
                     <h2>Cron Explain</h2>
                     <p>Convert cron expressions to human-readable text and vice versa. Never forget what <code>*/5 * * * *</code> means again.</p>
@@ -463,7 +544,7 @@
                     </svg>
                 </a>
 
-                <a href="/tools/curl-to-code/" class="tool-card" data-category="web">
+                <a href="/tools/curl-to-code/" class="tool-card" data-category="web" data-stars="95" data-date="2024-07">
                     <span class="tool-icon">🔄</span>
                     <h2>curl to Code</h2>
                     <p>Convert curl commands to JavaScript, Python, Go, and more. Copy from browser DevTools, get working code instantly.</p>
@@ -476,7 +557,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/depcheck-lite" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/depcheck-lite" class="tool-card" data-category="cli" data-stars="180" data-date="2025-01" target="_blank" rel="noopener">
                     <span class="tool-icon">⚡</span>
                     <h2>depcheck-lite</h2>
                     <p>Lightning-fast unused dependency checker. Zero config, regex-based scanning. Find unused deps in seconds without complex AST parsing.</p>
@@ -490,7 +571,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/envdiff" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/envdiff" class="tool-card" data-category="cli" data-stars="42" data-date="2024-12" target="_blank" rel="noopener">
                     <span class="tool-icon">🔀</span>
                     <h2>envdiff</h2>
                     <p>Compare .env files. Find missing variables before they break your deploy.</p>
@@ -503,7 +584,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/git-why" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/git-why" class="tool-card" data-category="cli" data-stars="250" data-date="2025-02" target="_blank" rel="noopener">
                     <span class="tool-icon">🔍</span>
                     <h2>git-why</h2>
                     <p>AI-powered git history explainer. Understand why code exists. Ask questions about commits, blame lines, and uncover the story behind your codebase.</p>
@@ -517,7 +598,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/gitig" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/gitig" class="tool-card" data-category="cli" data-stars="28" data-date="2024-09" target="_blank" rel="noopener">
                     <span class="tool-icon">🙈</span>
                     <h2>gitig</h2>
                     <p>Generate .gitignore files instantly. Built-in templates for 10+ platforms, works offline.</p>
@@ -530,7 +611,7 @@
                     </svg>
                 </a>
 
-                <a href="/tools/json-to-types/" class="tool-card" data-category="web">
+                <a href="/tools/json-to-types/" class="tool-card" data-category="web" data-stars="110" data-date="2024-06">
                     <span class="tool-icon">📝</span>
                     <h2>JSON to Types</h2>
                     <p>Convert JSON to TypeScript types instantly. Paste your JSON, get type-safe interfaces. Supports nested objects and arrays.</p>
@@ -543,7 +624,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/licensecheck" class="tool-card" data-category="cli security" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/licensecheck" class="tool-card" data-category="cli security" data-stars="68" data-date="2024-11" target="_blank" rel="noopener">
                     <span class="tool-icon">📜</span>
                     <h2>licensecheck</h2>
                     <p>Scan dependency licenses. Catch copyleft and missing licenses before they catch you.</p>
@@ -557,7 +638,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/lockcheck" class="tool-card" data-category="cli security" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/lockcheck" class="tool-card" data-category="cli security" data-stars="92" data-date="2024-10" target="_blank" rel="noopener">
                     <span class="tool-icon">🔒</span>
                     <h2>lockcheck</h2>
                     <p>Verify lockfile integrity. Detect suspicious registries, duplicate versions, missing hashes. Keep your supply chain secure.</p>
@@ -571,7 +652,7 @@
                     </svg>
                 </a>
 
-                <a href="/tools/paste-checker/" class="tool-card" data-category="web security">
+                <a href="/tools/paste-checker/" class="tool-card" data-category="web security" data-stars="140" data-date="2024-05">
                     <span class="tool-icon">🛡️</span>
                     <h2>Paste Checker</h2>
                     <p>AI-powered security scanner for clipboard content. Detects malicious scripts, hidden commands, and suspicious patterns before you paste.</p>
@@ -584,7 +665,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/pkgsize" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/pkgsize" class="tool-card" data-category="cli" data-stars="55" data-date="2024-08" target="_blank" rel="noopener">
                     <span class="tool-icon">📦</span>
                     <h2>pkgsize</h2>
                     <p>Check npm package sizes before you install. Compare alternatives, stay lean.</p>
@@ -598,7 +679,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/portguard" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/portguard" class="tool-card" data-category="cli" data-stars="160" data-date="2025-01" target="_blank" rel="noopener">
                     <span class="tool-icon">🚦</span>
                     <h2>portguard</h2>
                     <p>Monitor and manage localhost ports. Kill zombie processes. See what's running where, free up ports instantly, and stop fighting EADDRINUSE errors.</p>
@@ -612,7 +693,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/readme-gen" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/readme-gen" class="tool-card" data-category="cli" data-stars="75" data-date="2024-07" target="_blank" rel="noopener">
                     <span class="tool-icon">📄</span>
                     <h2>readme-gen</h2>
                     <p>Auto-generate README files from project structure. Analyze your codebase, create comprehensive documentation instantly. Save hours of manual writing.</p>
@@ -625,7 +706,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/tab-bankruptcy" class="tool-card" data-category="extension" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/tab-bankruptcy" class="tool-card" data-category="extension" data-stars="88" data-date="2024-06" target="_blank" rel="noopener">
                     <span class="tool-icon">🗂️</span>
                     <h2>Tab Bankruptcy</h2>
                     <p>Chrome extension to bulk close old tabs you'll never read. Declare tab bankruptcy and start fresh. Keep what matters, dump the rest.</p>
@@ -638,7 +719,7 @@
                     </svg>
                 </a>
 
-                <a href="https://github.com/muin-company/tsconfig-helper" class="tool-card" data-category="cli" target="_blank" rel="noopener">
+                <a href="https://github.com/muin-company/tsconfig-helper" class="tool-card" data-category="cli" data-stars="62" data-date="2024-09" target="_blank" rel="noopener">
                     <span class="tool-icon">⚙️</span>
                     <h2>tsconfig-helper</h2>
                     <p>Understand, compare, and generate tsconfig.json files. Plain English explanations for 40+ compiler options.</p>
@@ -674,42 +755,137 @@
     
     <script>
         const searchInput = document.getElementById('search');
-        const toolCards = document.querySelectorAll('.tool-card');
+        const sortSelect = document.getElementById('sort-select');
+        const toolsGrid = document.querySelector('.tools-grid');
         const filterButtons = document.querySelectorAll('.filter-btn');
         const toolCount = document.getElementById('tool-count');
         const noResults = document.getElementById('no-results');
         
         let currentFilter = 'all';
+        let currentSort = 'alphabetical';
+        let currentSearch = '';
         
+        // Load state from URL or localStorage
+        function loadState() {
+            const params = new URLSearchParams(window.location.search);
+            const search = params.get('search') || localStorage.getItem('toolsSearch') || '';
+            const filter = params.get('filter') || localStorage.getItem('toolsFilter') || 'all';
+            const sort = params.get('sort') || localStorage.getItem('toolsSort') || 'alphabetical';
+            
+            searchInput.value = search;
+            currentSearch = search;
+            currentFilter = filter;
+            currentSort = sort;
+            sortSelect.value = sort;
+            
+            // Set active filter button
+            filterButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
+        }
+        
+        // Save state to URL and localStorage
+        function saveState() {
+            const params = new URLSearchParams();
+            if (currentSearch) params.set('search', currentSearch);
+            if (currentFilter !== 'all') params.set('filter', currentFilter);
+            if (currentSort !== 'alphabetical') params.set('sort', currentSort);
+            
+            const newUrl = params.toString() 
+                ? `${window.location.pathname}?${params.toString()}`
+                : window.location.pathname;
+            
+            window.history.replaceState({}, '', newUrl);
+            
+            localStorage.setItem('toolsSearch', currentSearch);
+            localStorage.setItem('toolsFilter', currentFilter);
+            localStorage.setItem('toolsSort', currentSort);
+        }
+        
+        // Get all tool cards as array
+        function getToolCards() {
+            return Array.from(document.querySelectorAll('.tool-card'));
+        }
+        
+        // Sort tools
+        function sortTools() {
+            const cards = getToolCards();
+            
+            cards.sort((a, b) => {
+                switch (currentSort) {
+                    case 'alphabetical':
+                        const titleA = a.querySelector('h2').textContent.toLowerCase();
+                        const titleB = b.querySelector('h2').textContent.toLowerCase();
+                        return titleA.localeCompare(titleB);
+                    
+                    case 'recent':
+                        const dateA = a.dataset.date || '1970-01';
+                        const dateB = b.dataset.date || '1970-01';
+                        return dateB.localeCompare(dateA); // Newest first
+                    
+                    case 'popular':
+                        const starsA = parseInt(a.dataset.stars) || 0;
+                        const starsB = parseInt(b.dataset.stars) || 0;
+                        return starsB - starsA; // Most stars first
+                    
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Re-append cards in sorted order with animation
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    toolsGrid.appendChild(card);
+                    card.classList.add('fade-in');
+                    setTimeout(() => card.classList.remove('fade-in'), 400);
+                }, index * 20);
+            });
+        }
+        
+        // Update tool count
         function updateToolCount() {
-            const visibleCards = document.querySelectorAll('.tool-card:not(.hidden)');
+            const visibleCards = getToolCards().filter(card => !card.classList.contains('hidden'));
             const count = visibleCards.length;
             toolCount.textContent = `${count} tool${count !== 1 ? 's' : ''}`;
             noResults.style.display = count === 0 ? 'block' : 'none';
         }
         
+        // Filter tools
         function filterTools() {
-            const searchTerm = searchInput.value.toLowerCase();
+            const searchTerm = currentSearch.toLowerCase();
             
-            toolCards.forEach(card => {
+            getToolCards().forEach(card => {
                 const title = card.querySelector('h2').textContent.toLowerCase();
                 const description = card.querySelector('p').textContent.toLowerCase();
                 const categories = card.dataset.category || '';
                 
-                const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
-                const matchesFilter = currentFilter === 'all' || categories.includes(currentFilter);
+                const matchesSearch = !searchTerm || 
+                    title.includes(searchTerm) || 
+                    description.includes(searchTerm);
+                const matchesFilter = currentFilter === 'all' || 
+                    categories.includes(currentFilter);
                 
-                if (matchesSearch && matchesFilter) {
+                const shouldShow = matchesSearch && matchesFilter;
+                
+                if (shouldShow && card.classList.contains('hidden')) {
                     card.classList.remove('hidden');
-                } else {
+                    card.classList.add('fade-in');
+                    setTimeout(() => card.classList.remove('fade-in'), 400);
+                } else if (!shouldShow && !card.classList.contains('hidden')) {
                     card.classList.add('hidden');
                 }
             });
             
             updateToolCount();
+            saveState();
         }
         
-        searchInput.addEventListener('keyup', filterTools);
+        // Event listeners
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            filterTools();
+        });
         
         filterButtons.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -719,6 +895,17 @@
                 filterTools();
             });
         });
+        
+        sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            sortTools();
+            saveState();
+        });
+        
+        // Initialize
+        loadState();
+        sortTools();
+        filterTools();
     </script>
 </body>
 </html>
