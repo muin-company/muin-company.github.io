@@ -444,6 +444,8 @@
                 <button class="format-btn" data-format="zod">Zod Schema</button>
                 <button class="format-btn" data-format="py-typed">Python TypedDict</button>
                 <button class="format-btn" data-format="pydantic">Pydantic</button>
+                <button class="format-btn" data-format="go">Go Struct</button>
+                <button class="format-btn" data-format="rust">Rust Struct</button>
             </div>
             <button class="btn" id="copyBtn">📋 Copy</button>
             <button class="btn secondary" id="clearBtn">🗑️ Clear</button>
@@ -766,6 +768,10 @@ Example:
                     return generatePyTypedDict(data, name);
                 case 'pydantic':
                     return generatePydantic(data, name);
+                case 'go':
+                    return generateGo(data, name);
+                case 'rust':
+                    return generateRust(data, name);
                 default:
                     return '// Unknown format';
             }
@@ -1044,6 +1050,165 @@ Example:
             }
             
             return result + '\n';
+        }
+
+        function generateGo(data, name, indent = 0) {
+            const ind = '\t'.repeat(indent);
+            
+            if (Array.isArray(data)) {
+                if (data.length === 0) return `type ${name} []interface{}\n`;
+                if (typeof data[0] === 'object') {
+                    const itemType = capitalize(name.replace(/s$/, ''));
+                    return generateGoStruct(data[0], itemType, indent) + `\ntype ${name} []${itemType}\n`;
+                }
+                const goType = inferGoType(data[0]);
+                return `type ${name} []${goType}\n`;
+            }
+            
+            if (typeof data !== 'object' || data === null) {
+                return `type ${name} ${inferGoType(data)}\n`;
+            }
+
+            return generateGoStruct(data, name, indent);
+        }
+
+        function generateGoStruct(data, name, indent = 0) {
+            const ind = '\t'.repeat(indent);
+            let result = `${ind}type ${name} struct {\n`;
+            
+            // Generate nested structs first
+            let nestedStructs = '';
+            for (const [key, value] of Object.entries(data)) {
+                if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                    nestedStructs += '\n' + generateGoStruct(value, capitalize(key), indent);
+                } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
+                    const itemType = capitalize(key.replace(/s$/, ''));
+                    nestedStructs += '\n' + generateGoStruct(value[0], itemType, indent);
+                }
+            }
+            
+            for (const [key, value] of Object.entries(data)) {
+                const fieldName = capitalize(key);
+                const jsonTag = `\`json:"${key}"\``;
+                
+                if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                    result += `${ind}\t${fieldName} ${capitalize(key)} ${jsonTag}\n`;
+                } else if (Array.isArray(value)) {
+                    if (value.length === 0) {
+                        result += `${ind}\t${fieldName} []interface{} ${jsonTag}\n`;
+                    } else if (typeof value[0] === 'object') {
+                        const itemType = capitalize(key.replace(/s$/, ''));
+                        result += `${ind}\t${fieldName} []${itemType} ${jsonTag}\n`;
+                    } else {
+                        result += `${ind}\t${fieldName} []${inferGoType(value[0])} ${jsonTag}\n`;
+                    }
+                } else {
+                    result += `${ind}\t${fieldName} ${inferGoType(value)} ${jsonTag}\n`;
+                }
+            }
+            
+            result += `${ind}}\n`;
+            return result + nestedStructs;
+        }
+
+        function inferGoType(value) {
+            if (value === null) return 'interface{}';
+            if (Array.isArray(value)) return '[]interface{}';
+            if (typeof value === 'object') return 'struct{}';
+            if (typeof value === 'string') return 'string';
+            if (typeof value === 'boolean') return 'bool';
+            if (typeof value === 'number') {
+                return Number.isInteger(value) ? 'int' : 'float64';
+            }
+            return 'interface{}';
+        }
+
+        function generateRust(data, name, indent = 0) {
+            const ind = '    '.repeat(indent);
+            
+            if (Array.isArray(data)) {
+                if (data.length === 0) return `type ${name} = Vec<serde_json::Value>;\n`;
+                if (typeof data[0] === 'object') {
+                    const itemType = capitalize(name.replace(/s$/, ''));
+                    return generateRustStruct(data[0], itemType, indent) + `\ntype ${name} = Vec<${itemType}>;\n`;
+                }
+                const rustType = inferRustType(data[0]);
+                return `type ${name} = Vec<${rustType}>;\n`;
+            }
+            
+            if (typeof data !== 'object' || data === null) {
+                return `type ${name} = ${inferRustType(data)};\n`;
+            }
+
+            return generateRustStruct(data, name, indent);
+        }
+
+        function generateRustStruct(data, name, indent = 0) {
+            const ind = '    '.repeat(indent);
+            let result = `use serde::{Deserialize, Serialize};\n\n`;
+            
+            // Generate nested structs first
+            let nestedStructs = '';
+            for (const [key, value] of Object.entries(data)) {
+                if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                    nestedStructs += '\n' + generateRustStructOnly(value, capitalize(key), indent);
+                } else if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
+                    const itemType = capitalize(key.replace(/s$/, ''));
+                    nestedStructs += '\n' + generateRustStructOnly(value[0], itemType, indent);
+                }
+            }
+            
+            result += `${ind}#[derive(Debug, Serialize, Deserialize)]\n`;
+            result += `${ind}pub struct ${name} {\n`;
+            
+            for (const [key, value] of Object.entries(data)) {
+                const rustType = inferRustFieldType(value, key);
+                result += `${ind}    pub ${key}: ${rustType},\n`;
+            }
+            
+            result += `${ind}}\n`;
+            return result + nestedStructs;
+        }
+
+        function generateRustStructOnly(data, name, indent = 0) {
+            const ind = '    '.repeat(indent);
+            let result = `${ind}#[derive(Debug, Serialize, Deserialize)]\n`;
+            result += `${ind}pub struct ${name} {\n`;
+            
+            for (const [key, value] of Object.entries(data)) {
+                const rustType = inferRustFieldType(value, key);
+                result += `${ind}    pub ${key}: ${rustType},\n`;
+            }
+            
+            result += `${ind}}\n`;
+            return result;
+        }
+
+        function inferRustFieldType(value, key) {
+            if (value === null) return 'Option<serde_json::Value>';
+            if (Array.isArray(value)) {
+                if (value.length === 0) return 'Vec<serde_json::Value>';
+                if (typeof value[0] === 'object') {
+                    return `Vec<${capitalize(key.replace(/s$/, ''))}>`;
+                }
+                return `Vec<${inferRustType(value[0])}>`;
+            }
+            if (typeof value === 'object') {
+                return capitalize(key);
+            }
+            return inferRustType(value);
+        }
+
+        function inferRustType(value) {
+            if (value === null) return 'Option<serde_json::Value>';
+            if (Array.isArray(value)) return 'Vec<serde_json::Value>';
+            if (typeof value === 'object') return 'serde_json::Value';
+            if (typeof value === 'string') return 'String';
+            if (typeof value === 'boolean') return 'bool';
+            if (typeof value === 'number') {
+                return Number.isInteger(value) ? 'i64' : 'f64';
+            }
+            return 'serde_json::Value';
         }
 
         function capitalize(str) {

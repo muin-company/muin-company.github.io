@@ -521,6 +521,7 @@ curl -X POST https://api.example.com/users \
                     <button class="tab-btn" data-lang="go">Go</button>
                     <button class="tab-btn" data-lang="php">PHP</button>
                     <button class="tab-btn" data-lang="ruby">Ruby</button>
+                    <button class="tab-btn" data-lang="rust">Rust</button>
                 </div>
 
                 <div class="tab-content active" data-lang="python">
@@ -592,6 +593,18 @@ curl -X POST https://api.example.com/users \
                             Copy
                         </button>
                         <pre id="output-ruby"><span class="placeholder">// Your Ruby code will appear here...</span></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" data-lang="rust">
+                    <div class="code-wrapper">
+                        <button class="copy-btn" data-lang="rust">
+                            <svg class="copy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            Copy
+                        </button>
+                        <pre id="output-rust"><span class="placeholder">// Your Rust code will appear here...</span></pre>
                     </div>
                 </div>
             </div>
@@ -1019,6 +1032,47 @@ curl -X POST https://api.example.com/users \
                 return code;
             }
 
+            generateRust(parsed) {
+                let code = "use reqwest;\n";
+                code += "use std::collections::HashMap;\n\n";
+                code += "#[tokio::main]\n";
+                code += "async fn main() -> Result<(), Box<dyn std::error::Error>> {\n";
+                code += "    let client = reqwest::Client::new();\n\n";
+                
+                const method = parsed.method.toLowerCase();
+                code += `    let mut request = client.${method}("${parsed.url}")\n`;
+                
+                if (Object.keys(parsed.headers).length > 0) {
+                    for (const [key, value] of Object.entries(parsed.headers)) {
+                        code += `        .header("${key}", "${value}")\n`;
+                    }
+                }
+                
+                if (parsed.auth) {
+                    code += `        .basic_auth("${parsed.auth.username}", Some("${parsed.auth.password}"))\n`;
+                }
+                
+                if (parsed.data) {
+                    const isJson = parsed.headers['Content-Type']?.includes('application/json');
+                    if (isJson) {
+                        code += `        .json(&serde_json::json!(${parsed.data}))\n`;
+                    } else {
+                        code += `        .body("${parsed.data}")\n`;
+                    }
+                }
+                
+                code += "        .send()\n";
+                code += "        .await?;\n\n";
+                code += "    let status = response.status();\n";
+                code += "    let body = response.text().await?;\n\n";
+                code += '    println!("Status: {}", status);\n';
+                code += '    println!("Body: {}", body);\n\n';
+                code += "    Ok(())\n";
+                code += "}";
+                
+                return code;
+            }
+
             generate(parsed, language) {
                 const generators = {
                     python: () => this.generatePython(parsed),
@@ -1026,7 +1080,8 @@ curl -X POST https://api.example.com/users \
                     nodejs: () => this.generateNodeJS(parsed),
                     go: () => this.generateGo(parsed),
                     php: () => this.generatePHP(parsed),
-                    ruby: () => this.generateRuby(parsed)
+                    ruby: () => this.generateRuby(parsed),
+                    rust: () => this.generateRust(parsed)
                 };
 
                 return generators[language]?.() || '// Language not supported yet';
@@ -1067,7 +1122,7 @@ curl -X POST https://api.example.com/users \
                 }
 
                 // Generate code for all languages
-                ['python', 'javascript', 'nodejs', 'go', 'php', 'ruby'].forEach(lang => {
+                ['python', 'javascript', 'nodejs', 'go', 'php', 'ruby', 'rust'].forEach(lang => {
                     const code = generator.generate(parsed, lang);
                     outputs[lang] = code;
                     document.getElementById(`output-${lang}`).textContent = code;
