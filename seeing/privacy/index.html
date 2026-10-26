@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="What Seeing Tonight sends, and what it does not. No analytics, no advertising, no account.">
+    <meta name="theme-color" content="#0a0a0a">
+    <link rel="canonical" href="https://muin.company/seeing/privacy">
+    <title>Seeing Tonight — Privacy policy</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f5f5f5; --card: #ffffff; --line: #ddd;
+            --fg: #222; --fg2: #666; --accent: #10b981;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0d1117; --card: #161b22; --line: #30363d;
+                --fg: #e6edf3; --fg2: #8b949e; --accent: #34d399;
+            }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg); color: var(--fg); line-height: 1.7;
+            padding: 24px 16px 64px;
+        }
+        main { max-width: 720px; margin: 0 auto; }
+        .langs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; font-size: 14px; }
+        .langs a { color: var(--fg2); text-decoration: none; }
+        .langs a[aria-current] { color: var(--accent); font-weight: 600; }
+        h1 { font-size: 26px; margin-bottom: 6px; letter-spacing: -0.01em; }
+        .date { color: var(--fg2); font-size: 13px; margin-bottom: 28px; }
+        h2 { font-size: 17px; margin: 30px 0 10px; }
+        p, li { margin-bottom: 12px; }
+        ul { padding-left: 22px; }
+        a { color: var(--accent); }
+        code {
+            background: var(--card); border: 1px solid var(--line);
+            border-radius: 4px; padding: 1px 5px; font-size: 0.92em;
+        }
+        footer {
+            margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
+            color: var(--fg2); font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+<main>
+<nav class="langs"><a href="/seeing/privacy/" aria-current="page">English</a><a href="/seeing/privacy/ko.html">한국어</a></nav>
+<h1>Seeing Tonight — Privacy policy</h1>
+<p class="date">Effective 27 October 2026</p>
+<p>Seeing Tonight does not collect personal data. The developer runs no server that receives anything from the app, and there is no account to create.</p>
+<h2>What leaves the device, and when</h2>
+<p><strong>The coordinates of a place you are looking at.</strong> To get a forecast, the app asks two public weather services about the sky above a particular latitude and longitude. Those requests carry the coordinates and nothing else — no identifier, no account, nothing that says which device or person asked.</p>
+<ul>
+<li><strong>MET Norway</strong> (api.met.no), the Norwegian Meteorological Institute, for cloud in three layers, temperature, humidity, dew point and wind. Their data is published under CC BY 4.0. Their terms require an app to identify itself, so the request carries the app's name and the address of its source repository. It carries nothing about you.</li>
+<li><strong>7Timer!</strong> (7timer.info) for seeing and transparency.</li>
+</ul>
+<p>The observing sites that ship with the app are fixed points on a map. A place you add yourself is stored on the device and sent to those two services only when you open its forecast.</p>
+<h2>Location</h2>
+<p>If you tap <strong>Current location</strong>, the app asks the system for the device's position and uses it the same way as any other place: to ask those two services what the sky is doing there. The position is not stored beyond the session and is not sent anywhere else.</p>
+<p>You can use the app without ever granting location access. Every place on the list works without it.</p>
+<h2>What stays on the device</h2>
+<p>Your list of observing sites, the icon and theme you chose, and the last forecast received for each place. All of it lives in the app's own storage and is removed when you delete the app.</p>
+<h2>What the app does not do</h2>
+<ul>
+<li>No analytics, no usage statistics, no crash reports sent to the developer.</li>
+<li>No advertising, and no advertising identifiers.</li>
+<li>No tracking, in Apple's sense or any other.</li>
+<li>No third-party SDKs. The navigation buttons hand a destination to an app you already have; nothing comes back here.</li>
+</ul>
+<h2>Children</h2>
+<p>The app collects nothing, so there is nothing collected from anyone of any age.</p>
+<h2>Changes</h2>
+<p>If this ever changes, the date at the top changes with it, and the change is described in the app's release notes.</p>
+<h2>Contact</h2>
+<p><a href="mailto:seeing@muin.company">seeing@muin.company</a></p>
+<footer>
+  <a href="https://muin.company">MUIN</a> · <a href="mailto:seeing@muin.company">seeing@muin.company</a>
+</footer>
+</main>
+</body>
+</html>
